@@ -31,8 +31,9 @@ class FrontendRest
         if ($path && is_dir($path)) {
             $channel = 'stable';
             $file    = $path . '/dotclear-' . $channel;
-            if (file_exists($file) && ($content = @unserialize((string) @file_get_contents($file))) && (is_array($content))) {
-                if (isset($content['version'])) {
+            if (file_exists($file)) {
+                $content = @unserialize((string) @file_get_contents($file));
+                if (is_array($content) && isset($content['version'])) {
                     return [
                         'ret'  => true,
                         'text' => (string) $content['version'],

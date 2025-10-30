@@ -15,9 +15,7 @@ declare(strict_types=1);
 
 namespace Dotclear\Plugin\CustomElement;
 
-use Dotclear\App;
 use Dotclear\Helper\Process\TraitProcess;
-use Exception;
 
 class Install
 {
@@ -30,16 +28,6 @@ class Install
 
     public static function process(): bool
     {
-        if (!self::status()) {
-            return false;
-        }
-
-        try {
-            // Init
-        } catch (Exception $exception) {
-            App::error()->add($exception->getMessage());
-        }
-
-        return true;
+        return (bool) self::status();
     }
 }
