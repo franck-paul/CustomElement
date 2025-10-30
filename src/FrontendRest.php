@@ -16,7 +16,7 @@ declare(strict_types=1);
 namespace Dotclear\Plugin\CustomElement;
 
 use Dotclear\App;
-use Dotclear\Helper\File\Path;
+use Dotclear\Core\Upgrade\Update;
 
 class FrontendRest
 {
@@ -27,19 +27,19 @@ class FrontendRest
      */
     public static function getReleaseStableVersion(): array
     {
-        $path = Path::real(App::config()->cacheRoot() . '/versions');
-        if ($path && is_dir($path)) {
-            $channel = 'stable';
-            $file    = $path . '/dotclear-' . $channel;
-            if (file_exists($file)) {
-                $content = @unserialize((string) @file_get_contents($file));
-                if (is_array($content) && isset($content['version'])) {
-                    return [
-                        'ret'  => true,
-                        'text' => (string) $content['version'],
-                    ];
-                }
-            }
+        $channel = 'stable';
+        $updater = new Update(
+            App::config()->coreUpdateUrl(),
+            'dotclear',
+            $channel,
+            App::config()->cacheRoot() . DIRECTORY_SEPARATOR . Update::CACHE_FOLDER
+        );
+        $last = $updater->check('0.0');
+        if (is_string($last)) {
+            return [
+                'ret'  => true,
+                'text' => $last,
+            ];
         }
 
         return [
