@@ -6,7 +6,7 @@
  * @package Dotclear
  * @subpackage Plugins
  *
- * @author Franck Paul and contributors
+ * @author Franck Paul
  *
  * @copyright Franck Paul carnet.franck.paul@gmail.com
  * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
@@ -18,13 +18,13 @@ namespace Dotclear\Plugin\CustomElement;
 use Dotclear\App;
 use Dotclear\Helper\Process\TraitProcess;
 
-class Frontend
+class Prepend
 {
     use TraitProcess;
 
     public static function init(): bool
     {
-        return self::status(My::checkContext(My::FRONTEND));
+        return self::status(My::checkContext(My::PREPEND));
     }
 
     public static function process(): bool
@@ -33,10 +33,8 @@ class Frontend
             return false;
         }
 
-        // Load JS in head
-        App::behavior()->addBehaviors([
-            'publicHeadContent' => FrontendBehaviors::publicHeadContent(...),
-        ]);
+        // Route REST requests
+        App::url()->register('rest', 'rest', '^rest$', FrontendUrl::rest(...));
 
         return true;
     }
