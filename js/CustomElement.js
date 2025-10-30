@@ -1,8 +1,6 @@
 class DotclearRest {
-  // REST services helper
-  constructor() {
-    this.servicesUri = 'index.php?rest&';
-  }
+  // REST services helper (XML/JSON, GET method only)
+  servicesUri = 'index.php?rest&';
 
   run(
     fn, // REST method
@@ -22,7 +20,7 @@ class DotclearRest {
 
     // Add parameters to query part of URL
     const data = new URLSearchParams(params);
-    service.search = service.search + data.toString();
+    service.search += data.toString();
 
     fetch(service, { method: 'GET' })
       .then((promise) => {
@@ -49,16 +47,14 @@ class DotclearReleaseStableVersion extends HTMLElement {
         (data) => {
           // JSON decode response
           const response = JSON.parse(data);
-          if (response?.success) {
-            // REST call ok
-            if (response?.payload.ret) {
-              // REST function call ok
-              const shadow = this.attachShadow({ mode: 'open' });
-              const span = document.createElement('span');
-              span.textContent = response.payload.text;
-              shadow.appendChild(span);
-            }
+          if (!(response?.success && response?.payload.ret)) {
+            return;
           }
+          // REST function call ok
+          const shadow = this.attachShadow({ mode: 'open' });
+          const span = document.createElement('span');
+          span.textContent = response.payload.text;
+          shadow.appendChild(span);
         },
         (_error) => {}, // Ignore errors
         { json: 1 }, // Use JSON format
