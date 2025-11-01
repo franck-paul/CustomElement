@@ -15,11 +15,20 @@ declare(strict_types=1);
 
 namespace Dotclear\Plugin\CustomElement;
 
+use Dotclear\App;
+use Dotclear\Helper\Html\Html;
+
 class FrontendBehaviors
 {
     public static function publicHeadContent(): string
     {
-        echo My::jsLoad('CustomElement.js');
+        echo
+        Html::jsJson('custom-element', [
+            'uri' => App::url()->getMode() === 'path_info' ?
+                App::blog()->url() . 'rest' :
+                App::blog()->getQmarkURL() . 'rest&',
+        ]) .
+        My::jsLoad('CustomElement.js');
 
         return '';
     }

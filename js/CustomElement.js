@@ -2,6 +2,21 @@ class DotclearRest {
   // REST services helper (XML/JSON, GET method only)
   servicesUri = 'index.php?rest&';
 
+  constructor() {
+    const getData = (id) => {
+      let data = {};
+      const element = document.getElementById(`${id}-data`);
+      if (element) {
+        try {
+          data = JSON.parse(element.textContent);
+        } catch (e) {}
+      }
+      return data;
+    };
+
+    this.servicesUri = getData('custom-element').uri;
+  }
+
   run(
     fn, // REST method
     onSuccess = (_data) => {
