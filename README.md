@@ -36,3 +36,11 @@ Quand ça fonctionne bien le code source dans la page ressemble à ça (inspect�
     <span>2.35</span>
 </dotclear-release-stable-version>
 ```
+
+## Réglages
+
+Attention !
+
+Si l'option `enable_html_filter` est à `true` (about:config > system) les éléments personnalisés seront supprimés du contenu avant affichage.
+
+Il est recommandé de désactiver cette option si elle est active.
