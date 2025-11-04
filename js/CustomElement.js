@@ -4,14 +4,15 @@ class DotclearRest {
 
   constructor() {
     const getData = (id) => {
-      let data = {};
       const element = document.getElementById(`${id}-data`);
       if (element) {
         try {
-          data = JSON.parse(element.textContent);
-        } catch (e) {}
+          return JSON.parse(element.textContent);
+        } catch (e) {
+          console.log(e);
+        }
       }
-      return data;
+      return {};
     };
 
     this.servicesUri = getData('custom-element').uri;
