@@ -25,6 +25,7 @@ class FrontendUrl extends Url
         if (App::rest()->serveRestRequests()) {
             // Register REST methods
             App::rest()->addFunction('getReleaseStableVersion', FrontendRest::getReleaseStableVersion(...));
+            App::rest()->addFunction('getReleaseStablePhpMin', FrontendRest::getReleaseStablePhpMin(...));
 
             // Cope with REST request
             App::rest()->serve();

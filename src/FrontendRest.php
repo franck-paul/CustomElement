@@ -46,4 +46,32 @@ class FrontendRest
             'ret' => false,
         ];
     }
+
+    /**
+     * REST method to get stable release PHP minimum version.
+     *
+     * @return     array{ret:bool, text?:string}   The payload.
+     */
+    public static function getReleaseStablePhpMin(): array
+    {
+        $channel = 'stable';
+        $updater = new Update(
+            App::config()->coreUpdateUrl(),
+            'dotclear',
+            $channel,
+            App::config()->cacheRoot() . DIRECTORY_SEPARATOR . Update::CACHE_FOLDER
+        );
+        $updater->getVersionInfo();
+        $php = $updater->getPHPVersion();
+        if (is_string($php)) {
+            return [
+                'ret'  => true,
+                'text' => $php,
+            ];
+        }
+
+        return [
+            'ret' => false,
+        ];
+    }
 }

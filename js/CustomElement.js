@@ -79,4 +79,33 @@ class DotclearReleaseStableVersion extends HTMLElement {
   }
 }
 
+class DotclearReleaseStablePhpMin extends HTMLElement {
+  constructor() {
+    super();
+
+    // Get info via REST method
+    const service = new DotclearRest();
+    if (service) {
+      service.run(
+        'getReleaseStablePhpMin',
+        (data) => {
+          // JSON decode response
+          const response = JSON.parse(data);
+          if (!(response?.success && response?.payload.ret)) {
+            return;
+          }
+          // REST function call ok
+          const shadow = this.attachShadow({ mode: 'open' });
+          const span = document.createElement('span');
+          span.textContent = response.payload.text;
+          shadow.appendChild(span);
+        },
+        (_error) => {}, // Ignore errors
+        { json: 1 }, // Use JSON format
+      );
+    }
+  }
+}
+
 customElements.define('dotclear-release-stable-version', DotclearReleaseStableVersion);
+customElements.define('dotclear-release-stable-phpmin', DotclearReleaseStablePhpMin);
