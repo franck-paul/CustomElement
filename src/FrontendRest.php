@@ -17,16 +17,21 @@ namespace Dotclear\Plugin\CustomElement;
 
 use Dotclear\App;
 use Dotclear\Core\Upgrade\Update;
+use Exception;
 
 class FrontendRest
 {
+    protected static ?Update $updater = null;
+
     /**
-     * REST method to get stable release version.
-     *
-     * @return     array{ret:bool, text?:string}   The payload.
+     * Get Last info about stable release
      */
-    public static function getReleaseStableVersion(): array
+    protected static function getReleaseStableInfo(): ?Update
     {
+        if (self::$updater instanceof Update) {
+            return self::$updater;
+        }
+
         $channel = 'stable';
         $updater = new Update(
             App::config()->coreUpdateUrl(),
@@ -34,12 +39,37 @@ class FrontendRest
             $channel,
             App::config()->cacheRoot() . DIRECTORY_SEPARATOR . Update::CACHE_FOLDER
         );
-        $last = $updater->check('0.0');
-        if (is_string($last)) {
-            return [
-                'ret'  => true,
-                'text' => $last,
-            ];
+
+        try {
+            // Get information
+            $updater->getVersionInfo();
+
+            // Save updater instance for further calls if any
+            self::$updater = $updater;
+
+            return $updater;
+        } catch (Exception) {
+        }
+
+        return null;
+    }
+
+    /**
+     * REST method to get stable release version.
+     *
+     * @return     array{ret:bool, text?:string}   The payload.
+     */
+    public static function getReleaseStableVersion(): array
+    {
+        $updater = self::getReleaseStableInfo();
+        if ($updater instanceof Update) {
+            $last = $updater->getVersion();
+            if (is_string($last)) {
+                return [
+                    'ret'  => true,
+                    'text' => $last,
+                ];
+            }
         }
 
         return [
@@ -48,26 +78,21 @@ class FrontendRest
     }
 
     /**
-     * REST method to get stable release PHP minimum version.
+     * REST method to get stable last release PHP minimum version.
      *
      * @return     array{ret:bool, text?:string}   The payload.
      */
     public static function getReleaseStablePhpMin(): array
     {
-        $channel = 'stable';
-        $updater = new Update(
-            App::config()->coreUpdateUrl(),
-            'dotclear',
-            $channel,
-            App::config()->cacheRoot() . DIRECTORY_SEPARATOR . Update::CACHE_FOLDER
-        );
-        $updater->getVersionInfo();
-        $php = $updater->getPHPVersion();
-        if (is_string($php)) {
-            return [
-                'ret'  => true,
-                'text' => $php,
-            ];
+        $updater = self::getReleaseStableInfo();
+        if ($updater instanceof Update) {
+            $php = $updater->getPHPVersion();
+            if (is_string($php)) {
+                return [
+                    'ret'  => true,
+                    'text' => $php,
+                ];
+            }
         }
 
         return [

@@ -51,15 +51,17 @@ class DotclearRest {
   }
 }
 
-class DotclearReleaseStableVersion extends HTMLElement {
-  constructor() {
-    super();
+class DotclearReleaseStableInfo {
+  constructor(fn) {
+    this.fn = fn;
+  }
 
+  run(element) {
     // Get info via REST method
     const service = new DotclearRest();
     if (service) {
       service.run(
-        'getReleaseStableVersion',
+        this.fn,
         (data) => {
           // JSON decode response
           const response = JSON.parse(data);
@@ -67,7 +69,7 @@ class DotclearReleaseStableVersion extends HTMLElement {
             return;
           }
           // REST function call ok
-          const shadow = this.attachShadow({ mode: 'open' });
+          const shadow = element.attachShadow({ mode: 'open' });
           const span = document.createElement('span');
           span.textContent = response.payload.text;
           shadow.appendChild(span);
@@ -79,31 +81,19 @@ class DotclearReleaseStableVersion extends HTMLElement {
   }
 }
 
+class DotclearReleaseStableVersion extends HTMLElement {
+  constructor() {
+    super();
+
+    new DotclearReleaseStableInfo('getReleaseStableVersion').run(this);
+  }
+}
+
 class DotclearReleaseStablePhpMin extends HTMLElement {
   constructor() {
     super();
 
-    // Get info via REST method
-    const service = new DotclearRest();
-    if (service) {
-      service.run(
-        'getReleaseStablePhpMin',
-        (data) => {
-          // JSON decode response
-          const response = JSON.parse(data);
-          if (!(response?.success && response?.payload.ret)) {
-            return;
-          }
-          // REST function call ok
-          const shadow = this.attachShadow({ mode: 'open' });
-          const span = document.createElement('span');
-          span.textContent = response.payload.text;
-          shadow.appendChild(span);
-        },
-        (_error) => {}, // Ignore errors
-        { json: 1 }, // Use JSON format
-      );
-    }
+    new DotclearReleaseStableInfo('getReleaseStablePhpMin').run(this);
   }
 }
 
