@@ -15,9 +15,9 @@ $this->registerModule(
     'Custom HTML Element',
     'Custom HTML Element for Dotclear server',
     'Franck Paul',
-    '1.6',
+    '1.7',
     [
-        'date'        => '2025-10-30T14:38:33+01.6',
+        'date'        => '2025-10-30T14:38:33+01.7',
         'requires'    => [['core', '2.36']],
         'permissions' => 'My',
         'type'        => 'plugin',
