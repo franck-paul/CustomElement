@@ -33,7 +33,7 @@ Quand ça fonctionne bien le code source dans la page ressemble à ça (inspect�
 ```html
 <dotclear-release-stable-version>
   #shadow-root (open)
-    <span>2.35</span>
+    <span>2.36</span>
 </dotclear-release-stable-version>
 ```
 
@@ -68,6 +68,39 @@ Quand ça fonctionne bien le code source dans la page ressemble à ça (inspect�
   #shadow-root (open)
     <span>8.1</span>
 </dotclear-release-stable-phpmin>
+```
+
+### Version de PHP minimum pour la prochaine version (depuis la version actuellement installée)
+
+```html
+<dotclear-next-required-php>8.?</dotclear-next-required-php>
+```
+
+Le texte « 8.? » sera masqué et remplacé par la version minimale requise de PHP pour la dernière version disponible du canal stable.
+
+Insertion selon la syntaxe utilisée :
+
+- Wiki :
+
+    ```wiki
+    ``<dotclear-next-required-php></dotclear-next-required-php>``
+    ```
+
+- Markdown (directement, pas besoin d'autre chose) :
+
+    ```markdown
+    <dotclear-next-required-php></dotclear-next-required-php>
+    ```
+
+- HTML : idem Markdown sauf que les éditeurs peuvent avoir un nettoyage agressif et virer tout ce qu'ils ne connaissent pas, donc mode source à minima (à vérifier)
+
+Quand ça fonctionne bien le code source dans la page ressemble à ça (inspecté avec les devtools) :
+
+```html
+<dotclear-next-required-php>
+  #shadow-root (open)
+    <span>8.2</span>
+</dotclear-next-required-php>
 ```
 
 ## Réglages

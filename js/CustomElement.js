@@ -51,7 +51,7 @@ class DotclearRest {
   }
 }
 
-class DotclearReleaseStableInfo {
+class DotclearRestFetch {
   constructor(fn) {
     this.fn = fn;
   }
@@ -85,7 +85,7 @@ class DotclearReleaseStableVersion extends HTMLElement {
   constructor() {
     super();
 
-    new DotclearReleaseStableInfo('getReleaseStableVersion').run(this);
+    new DotclearRestFetch('getReleaseStableVersion').run(this);
   }
 }
 
@@ -93,9 +93,18 @@ class DotclearReleaseStablePhpMin extends HTMLElement {
   constructor() {
     super();
 
-    new DotclearReleaseStableInfo('getReleaseStablePhpMin').run(this);
+    new DotclearRestFetch('getReleaseStablePhpMin').run(this);
+  }
+}
+
+class DotclearNextRequiredPhp extends HTMLElement {
+  constructor() {
+    super();
+
+    new DotclearRestFetch('getNextRequiredPhp').run(this);
   }
 }
 
 customElements.define('dotclear-release-stable-version', DotclearReleaseStableVersion);
 customElements.define('dotclear-release-stable-phpmin', DotclearReleaseStablePhpMin);
+customElements.define('dotclear-next-required-php', DotclearNextRequiredPhp);

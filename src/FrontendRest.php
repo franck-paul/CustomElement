@@ -99,4 +99,17 @@ class FrontendRest
             'ret' => false,
         ];
     }
+
+    /**
+     * REST method to get next required PHP minimum version.
+     *
+     * @return     array{ret:bool, text:string}   The payload.
+     */
+    public static function getNextRequiredPhp(): array
+    {
+        return [
+            'ret'  => true,
+            'text' => App::config()->nextRequiredPhp(),
+        ];
+    }
 }
