@@ -18,9 +18,9 @@ if (isset($this) && is_object($this) && method_exists($this, 'registerModule') &
         'Custom HTML Element',
         'Custom HTML Element for Dotclear server',
         'Franck Paul',
-        '1.9',
+        '1.10',
         [
-            'date'        => '2025-10-30T14:38:33+01.9',
+            'date'        => '2025-10-30T14:38:33+01.10',
             'requires'    => [['core', '2.36']],
             'permissions' => 'My',
             'type'        => 'plugin',
