@@ -1,11 +1,11 @@
 <modules xmlns:da="http://dotaddict.org/da/">
   <module id="CustomElement">
     <name>CustomElement</name>
-    <version>1.9</version>
+    <version>1.10</version>
     <author>Franck Paul</author>
     <desc>Custom HTML Element</desc>
-    <date>2025-10-30T14:38:33+01.9</date>
-    <file>https://github.com/franck-paul/CustomElement/releases/download/1.9/plugin-CustomElement-1.9.zip</file>
+    <date>2025-10-30T14:38:33+01.10</date>
+    <file>https://github.com/franck-paul/CustomElement/releases/download/1.10/plugin-CustomElement-1.10.zip</file>
     <da:dcmin>2.36</da:dcmin>
     <da:details>https://dotclear.org/plugin/detail/CustomElement</da:details>
     <da:support>https://github.com/franck-paul/CustomElement</da:support>
